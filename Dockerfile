@@ -1,4 +1,5 @@
-FROM ubuntu:14.04
+#FROM ubuntu:14.04
+FROM redis:latest
 
 MAINTAINER Amit Mor <amimimor@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
@@ -11,4 +12,7 @@ RUN cd /dynomite && autoreconf -fvi && \
     ./configure --enable-debug=log && \
     make && \
     src/dynomite -h
+
+ADD confd/ /etc/
+RUN systemctl enable /etc/systemd/system/confd.service
 
